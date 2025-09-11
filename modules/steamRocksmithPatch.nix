@@ -1,5 +1,4 @@
-{ inputs
-, config
+{ config
 , pkgs
 , lib
 , ...
@@ -23,11 +22,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    programs.steam.package = pkgs.steamRocksmith;
-
-    environment.systemPackages = with pkgs; [
-      patch-rocksmith
-    ];
+    programs.steam.package = lib.mkDefault pkgs.steamRocksmith;
 
     services.pulseaudio.enable = lib.mkForce false;
 

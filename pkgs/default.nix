@@ -26,12 +26,16 @@
         in
         {
           steamRocksmith = pkgs.steam.override {
+            extraPkgs =
+              pkgs': with pkgs'; [
+                wineasio
+                patch-rocksmith
+              ];
             extraLibraries =
               pkgs': with pkgs'; [
                 pipewire.jack
                 rs-autoconnect
               ];
-            extraPkgs = pkgs': with pkgs'; [ wineasio ];
           };
 
           patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
