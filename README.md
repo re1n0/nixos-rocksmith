@@ -22,6 +22,7 @@ In order to use this, you need to include it in your flake's inputs like this:
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
+        inputs.nixos-rocksmith.nixosModules.default
         ./configuration.nix
       ];
     };
