@@ -16,8 +16,7 @@ in
       This will disable services.pulseaudio and enable `services.pipewire` alongside `services.pipewire.wireplumber`,
       `services.pipewire.jack`, `services.pipewire.lowLatency` (from nix-gaming) and `security.rtkit`.
 
-      This will also change the `programs.steam.package` to `pkgs.steamRocksmith` and add a package `patch-rocksmith`
-      to the `environment.systemPackages`.
+      This will also change the `programs.steam.package` to `pkgs.steamRocksmith`.
     '';
   };
 

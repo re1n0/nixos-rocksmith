@@ -20,25 +20,12 @@
 
       overlayAttrs = config.packages;
 
-      packages =
-        let
-          rs-autoconnect = pkgs.callPackage ./rs-autoconnect { inherit inputs; };
-        in
-        {
-          steamRocksmith = pkgs.steam.override {
-            extraPkgs =
-              pkgs': with pkgs'; [
-                wineasio
-                patch-rocksmith
-              ];
-            extraLibraries =
-              pkgs': with pkgs'; [
-                pipewire.jack
-                rs-autoconnect
-              ];
-          };
+      packages = {
+        rs-autoconnect = pkgs.callPackage ./rs-autoconnect { inherit inputs; };
 
-          patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
-        };
+        patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
+
+        steamRocksmith = pkgs.callPackage ./steam-rocksmith { };
+      };
     };
 }
