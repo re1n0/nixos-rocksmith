@@ -5,6 +5,18 @@
 }:
 let
   cfg = config.programs.steam.rocksmithPatch;
+  package = pkgs.steam.override {
+    extraPkgs =
+      pkgs': with pkgs'; [
+        patch-rocksmith
+        wineasio
+      ];
+    extraLibraries =
+      pkgs': with pkgs'; [
+        pipewire.jack
+        rs-autoconnect
+      ];
+  };
 in
 {
   meta.maintainers = with lib.maintainers; [ rein ];
@@ -16,12 +28,12 @@ in
       This will disable services.pulseaudio and enable `services.pipewire` alongside `services.pipewire.wireplumber`,
       `services.pipewire.jack`, `services.pipewire.lowLatency` (from nix-gaming) and `security.rtkit`.
 
-      This will also change the `programs.steam.package` to `pkgs.steamRocksmith`.
+      This will also override `pkgs.steam` to include `pipewire.jack`, `wineasio`, `rs-autoconnect` and `patch-rocksmith`.
     '';
   };
 
   config = lib.mkIf cfg.enable {
-    programs.steam.package = lib.mkDefault pkgs.steamRocksmith;
+    programs.steam.package = lib.mkDefault package;
 
     services.pulseaudio.enable = lib.mkForce false;
 

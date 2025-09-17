@@ -24,8 +24,6 @@
         rs-autoconnect = pkgs.callPackage ./rs-autoconnect { inherit inputs; };
 
         patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
-
-        steamRocksmith = pkgs.callPackage ./steam-rocksmith { };
       };
     };
 }
