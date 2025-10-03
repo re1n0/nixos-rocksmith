@@ -1,14 +1,14 @@
-{ inputs
-, lib
-, writeShellApplication
-, bash
-, coreutils
-, findutils
-, gawk
-, gnutar
-, unzip
-, wget
-,
+{
+  inputs,
+  lib,
+  writeShellApplication,
+  bash,
+  coreutils,
+  findutils,
+  gawk,
+  gnutar,
+  unzip,
+  wget,
 }:
 writeShellApplication {
   name = "patch-rocksmith";

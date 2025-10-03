@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.programs.steam.rocksmithPatch;
@@ -14,7 +15,7 @@ let
     extraLibraries =
       pkgs': with pkgs'; [
         pipewire.jack
-        rs-autoconnect
+        pkgsi686Linux.rs-autoconnect
       ];
   };
 in

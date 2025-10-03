@@ -1,18 +1,16 @@
-{ inputs
-, lib
-, multiStdenv
-, cmake
-, pkgsi686Linux
-,
+{
+  inputs,
+  lib,
+  pkgsi686Linux,
 }:
-multiStdenv.mkDerivation (finalAttrs: {
+pkgsi686Linux.stdenv.mkDerivation (finalAttrs: {
   pname = "rs-autoconnect";
   version = "1.1.1";
 
   src = inputs.rs-linux-autoconnect;
 
   nativeBuildInputs = [
-    cmake
+    pkgsi686Linux.cmake
   ];
 
   buildInputs = [

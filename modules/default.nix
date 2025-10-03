@@ -1,6 +1,7 @@
-{ inputs
-, self
-, ...
+{
+  inputs,
+  self,
+  ...
 }:
 {
   flake.nixosModules.default = {
