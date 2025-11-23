@@ -23,7 +23,7 @@
       overlayAttrs = config.packages;
 
       packages = {
-        rs-autoconnect = pkgs.callPackage ./rs-autoconnect { inherit inputs; };
+        rs-autoconnect = pkgs.pkgsi686Linux.callPackage ./rs-autoconnect { inherit inputs; };
 
         patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
       };

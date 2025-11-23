@@ -1,20 +1,22 @@
 {
   inputs,
   lib,
-  pkgsi686Linux,
+  stdenv,
+  cmake,
+  jack2,
 }:
-pkgsi686Linux.stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "rs-autoconnect";
   version = "1.1.1";
 
   src = inputs.rs-linux-autoconnect;
 
   nativeBuildInputs = [
-    pkgsi686Linux.cmake
+    cmake
   ];
 
   buildInputs = [
-    pkgsi686Linux.jack2
+    jack2
   ];
 
   installPhase = ''

@@ -15,7 +15,7 @@ let
     extraLibraries =
       pkgs': with pkgs'; [
         pipewire.jack
-        pkgsi686Linux.rs-autoconnect
+        rs-autoconnect
       ];
   };
 in
