@@ -53,8 +53,3 @@ In order to use this, you need to include it in your flake's inputs like this:
 
 Tips for running Rocksmith 2014 on Linux are available in [linux_rocksmith](https://github.com/theNizo/linux_rocksmith) repo.
 Go check them out for potential troubleshooting or setting Launch Options on Steam. 
-
-## ⚠️ Beware
-
-The flake does not provide a binary cache for its packages, thus you'll need to compile them on your own machine.
-This might make rebuilding take quite a bit more time after an update.
