@@ -20,7 +20,7 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Cachix
         uses: cachix/cachix-action@v15
@@ -33,7 +33,7 @@ jobs:
         run: |
           set -eo pipefail
           for p in $(nix eval --json .#packages.x86_64-linux | jq -r 'keys[]'); do
-            nix build ".#${p}" || exit $?
+            nix build --no-link --print-out-paths ".#${p}" || exit $?
           done
         env:
           NIX_REMOTE: "daemon"
