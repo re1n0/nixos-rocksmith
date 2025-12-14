@@ -1,0 +1,32 @@
+name: update-dependencies
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *' # at 3 am UTC
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Update flake.lock
+        id: update
+        uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          pr-labels: |
+            dependencies
+            automated
+          pr-assignees: re1n0
+
+      - name: Print PR number
+        run: echo PR number is ${{ steps.update.outputs.pull-request-number }}
