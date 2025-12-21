@@ -21,15 +21,15 @@
     "linux-rocksmith": {
       "flake": false,
       "locked": {
-        "lastModified": 1765549758,
-        "narHash": "sha256-51a2/Br+opaXD/FkFty36RwGr9YdMcN54rGKMCW0HAk=",
-        "owner": "theNizo",
+        "lastModified": 1766351978,
+        "narHash": "sha256-x1mzraZqjqugcXUbnBWAV4ZFUTWu4DOo3Fy4QjkP1Bc=",
+        "owner": "re1n0",
         "repo": "linux_rocksmith",
-        "rev": "f019ebee03182a14440a8a4cac7e2b49a6482eb5",
+        "rev": "e60211236eb5e712bff7bc941f544d792bccff2b",
         "type": "github"
       },
       "original": {
-        "owner": "theNizo",
+        "owner": "re1n0",
         "repo": "linux_rocksmith",
         "type": "github"
       }
