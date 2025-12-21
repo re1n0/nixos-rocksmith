@@ -13,7 +13,7 @@
     };
 
     linux-rocksmith = {
-      url = "github:re1n0/linux_rocksmith";
+      url = "github:theNizo/linux_rocksmith";
       flake = false;
     };
 
