@@ -33,6 +33,12 @@ writeShellApplication {
     maintainers = with lib.maintainers; [
       rein
     ];
+
+    postInstall = ''
+      mkdir -p $out/share/man/man1
+      install -m644 docs/patch-rocksmith.1 $out/share/man/patch-rocksmith.1
+    '';
+
     mainProgram = "patch-rocksmith";
   };
 }

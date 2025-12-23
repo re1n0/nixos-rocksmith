@@ -1,0 +1,94 @@
+.TH patch-rocksmith(1)
+
+.SH NAME
+patch-rocksmith \- interactive script for patching Rocksmith 2014 on NixOS
+
+.SH SYNOPSIS
+.B patch-rocksmith
+.RI [ OPTIONS ]
+
+.SH DESCRIPTION
+patch-rocksmith is an interactive shell script intended to be run from a Steam FHS environment (via steam-run). It prepares a Proton/Wine environment and applies patches so Rocksmith 2014 can use WineASIO and the RS_ASIO driver. Primary actions performed:
+.TP
+\- Install WineASIO libraries into the selected Proton distribution and register the DLLs in the chosen Wine prefix.
+.TP
+\- Download and install the RS_ASIO release into the Rocksmith 2014 installation directory and update its configuration to use wineasio-rsasio.
+.TP
+\- Optionally download and run a CDLC Enabler installer.
+.TP
+\- Print recommended Steam launch options for Rocksmith.
+
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Prints all available options.
+.TP
+.B \-s, \-\-steampath=path
+Path to the Steam library. Default: ~/.steam/steam.
+.TP
+.B \-w, \-\-wineprefix=path
+Wine prefix to use (the script will copy/register DLLs there). Default points to compatdata/221680/pfx under the Steam path.
+.TP
+.B \-r, \-\-rsasiover=version
+RS_ASIO version to install (format x.y.z). The script validates the version format; invalid formats cause the script to exit with status 2.
+.TP
+.B \-p, \-\-protonpath=path
+Path to a Proton installation (steamapps/common/Proton x.y). When supplied this must be accompanied by \-P/--protontype.
+.TP
+.B \-P, \-\-protontype=TYPE
+Specify the Proton distribution layout type for the path given with \-p. Allowed values:
+.RS
+files
+.br
+dist
+.RE
+This controls whether the script looks under the Proton directory's "files" or "dist" sublayout for wine binaries and lib directories.
+.TP
+.B \-C, \-\-cdlc
+Download and run the CDLC Enabler (downloads the enabler and executes it under the selected Wine).
+.TP
+.B \-M, \-\-mods
+Download and run the Mods Insstaller (downloads the installer and executes it under the selected Wine).
+
+.SH BEHAVIOUR AND INTERACTIVITY
+The script is interactive by default and will:
+.TP
+\- Prompt for a Proton selection if one is not provided via options.
+.TP
+\- Prompt for an RS_ASIO version unless provided via options.
+.TP
+\- Run a set of environment checks (presence of expected directories, Proton/Wine binaries, libjack, wineasio DLLs, and required programs such as steam and pipewire). If any required check fails the script exits.
+.TP
+\- Seek explicit user confirmation before registering DLLs.
+
+.SH EXIT STATUS
+.TP
+.B 0
+Successful completion.
+.TP
+.B 1
+One or more environment checks failed (missing directories/files/programs) or user declined to continue.
+.TP
+.B 2
+Invalid usage or argument error (missing required argument, invalid rsasio version format, unknown option, or dependent options not supplied).
+
+.SH ENVIRONMENT
+The script expects to find Proton distributions under the Steam path and to use Proton's wine and wine64 binaries (typically under "files/bin" or "dist/bin").
+
+.SH EXAMPLES
+.TP
+Install RS_ASIO 0.7.3 and run the CDLC enabler (use defaults for Steam and Wineprefix):
+.RS
+patch-rocksmith --cdlc -r 0.7.3
+.RE
+.TP
+Use a custom Proton path and explicit proton type:
+.RS
+patch-rocksmith -p /path/to/Proton-GE -P files
+.RE
+
+.SH SECURITY AND NOTES
+.P
+\- The script copies and overwrites files inside Proton and the Wine prefix; run only from a trusted environment and review the script before executing.
+.P
+\- The script is intended to be executed under steam-run to ensure Steam FHS compatibility.
