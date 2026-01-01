@@ -13,7 +13,7 @@
     };
 
     linux-rocksmith = {
-      url = "github:theNizo/linux_rocksmith";
+      url = "git+https://codeberg.org/nizo/linux-rocksmith";
       flake = false;
     };
 
