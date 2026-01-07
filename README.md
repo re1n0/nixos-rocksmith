@@ -51,5 +51,5 @@ In order to use this, you need to include it in your flake's inputs like this:
 
 ## 🔍 Further Instructions
 
-Tips for running Rocksmith 2014 on Linux are available in [linux_rocksmith](https://github.com/theNizo/linux_rocksmith) repo.
+Tips for running Rocksmith 2014 on Linux are available in [linux-rocksmith](https://codeberg.org/nizo/linux-rocksmith) repo.
 Go check them out for potential troubleshooting or setting Launch Options on Steam. 
