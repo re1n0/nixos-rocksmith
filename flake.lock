@@ -21,11 +21,11 @@
     "linux-rocksmith": {
       "flake": false,
       "locked": {
-        "lastModified": 1767546258,
-        "narHash": "sha256-Wr/tUfJ5Mc3FL9ZRbyTrATH9t6hBmxynfGNdSOwAE4w=",
+        "lastModified": 1768693613,
+        "narHash": "sha256-bwW8vLq6+QFiS7XNAONScHzW2VDaf09yReBbnHp58WM=",
         "ref": "refs/heads/main",
-        "rev": "f2ff9a45fe8b21e5778d35f10ba9ea39f0d425c1",
-        "revCount": 217,
+        "rev": "730f1febe9efc5c1e40cb1207e4eeda15ff92e14",
+        "revCount": 224,
         "type": "git",
         "url": "https://codeberg.org/nizo/linux-rocksmith"
       },
@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768143458,
-        "narHash": "sha256-UZN5E58XMsvKoJBPy4+beQjTkYJti58qPC+m9GDyePY=",
+        "lastModified": 1768702158,
+        "narHash": "sha256-k9OVfn2Osw5wBvCazstlzjGY8zC82RvTlcmeGFZ5uak=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "9d30426090a8d274eb20dc36bd28c6e37dc3589c",
+        "rev": "88f03a8a5685eca1c645372ebd1767b9b228d60c",
         "type": "github"
       },
       "original": {
@@ -59,11 +59,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1768127708,
-        "narHash": "sha256-1Sm77VfZh3mU0F5OqKABNLWxOuDeHIlcFjsXeeiPazs=",
+        "lastModified": 1768564909,
+        "narHash": "sha256-Kell/SpJYVkHWMvnhqJz/8DqQg2b6PguxVWOuadbHCc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ffbc9f8cbaacfb331b6017d5a5abb21a492c9a38",
+        "rev": "e4bae1bd10c9c57b2cf517953ab70060a828ee6f",
         "type": "github"
       },
       "original": {
