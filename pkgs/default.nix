@@ -25,6 +25,8 @@
       packages = {
         rs-autoconnect = pkgs.pkgsi686Linux.callPackage ./rs-autoconnect { inherit inputs; };
 
+        wineasio-32 = pkgs.pkgsi686Linux.callPackage ./wineasio-32 { };
+
         patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
       };
     };

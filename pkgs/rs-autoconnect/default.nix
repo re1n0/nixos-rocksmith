@@ -3,7 +3,7 @@
   lib,
   stdenv,
   cmake,
-  jack2,
+  libjack2,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "rs-autoconnect";
@@ -16,7 +16,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    jack2
+    libjack2
   ];
 
   installPhase = ''

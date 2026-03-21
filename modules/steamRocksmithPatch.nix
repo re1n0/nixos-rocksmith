@@ -11,6 +11,7 @@ let
       pkgs': with pkgs'; [
         patch-rocksmith
         wineasio
+        wineasio-32
       ];
     extraLibraries =
       pkgs': with pkgs'; [
