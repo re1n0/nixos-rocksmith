@@ -5,7 +5,7 @@
   cmake,
   libjack2,
 }:
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation {
   pname = "rs-autoconnect";
   version = "1.1.1";
 
@@ -31,4 +31,4 @@ stdenv.mkDerivation (finalAttrs: {
       rein
     ];
   };
-})
+}

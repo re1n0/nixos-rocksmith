@@ -24,7 +24,7 @@
   };
 
   outputs =
-    { self, ... }@inputs:
+    inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./modules
