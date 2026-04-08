@@ -27,7 +27,7 @@ writeShellApplication {
 
   meta = {
     description = "Script to patch Rocksmith 2014";
-    homepage = "https://github.com/theNizo/linux_rocksmith";
+    homepage = "https://codeberg.org/nizo/linux-rocksmith";
     license = lib.licenses.gpl3Plus;
     version = builtins.substring 0 10 inputs.linux-rocksmith.locked.time;
     maintainers = with lib.maintainers; [
