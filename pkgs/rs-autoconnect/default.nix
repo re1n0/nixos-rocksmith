@@ -27,6 +27,7 @@ stdenv.mkDerivation {
   meta = {
     description = "A shim library to automatically connect Rocksmith 2014 on Linux to pipewire inputs and outputs";
     license = lib.licenses.mit;
+    homepage = "https://github.com/KczBen/rs-linux-autoconnect";
     maintainers = with lib.maintainers; [
       rein
     ];
