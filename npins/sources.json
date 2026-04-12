@@ -1,0 +1,35 @@
+{
+  "pins": {
+    "linux-rocksmith": {
+      "type": "Git",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://codeberg.org/",
+        "owner": "nizo",
+        "repo": "linux-rocksmith"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "b3ad5c031732a8bef7a53de6f560aac5779797f7",
+      "url": "https://codeberg.org/nizo/linux-rocksmith/archive/b3ad5c031732a8bef7a53de6f560aac5779797f7.tar.gz",
+      "hash": "sha256-5tchphfL15fu/u0pIlQT9U9L8QPPBgZ+eEtGZRkSy6I="
+    },
+    "rs-linux-autoconnect": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "KczBen",
+        "repo": "rs-linux-autoconnect"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.1.1",
+      "revision": "09a3f0fd0492573dd48468ab413626edd0cba757",
+      "url": "https://api.github.com/repos/KczBen/rs-linux-autoconnect/tarball/refs/tags/v1.1.1",
+      "hash": "sha256-Uk4J2ZGHZFI6RX7pmGbdgxUWWdOegsNtJLc/aeBnj54="
+    }
+  },
+  "version": 7
+}

@@ -2,6 +2,9 @@
   inputs,
   ...
 }:
+let
+  pins = import ../npins;
+in
 {
   systems = [ "x86_64-linux" ];
 
@@ -22,11 +25,11 @@
       overlayAttrs = config.packages;
 
       packages = {
-        rs-autoconnect = pkgs.pkgsi686Linux.callPackage ./rs-autoconnect { inherit inputs; };
+        rs-autoconnect = pkgs.pkgsi686Linux.callPackage ./rs-autoconnect { inherit pins; };
 
         wineasio-32 = pkgs.pkgsi686Linux.callPackage ./wineasio-32 { };
 
-        patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit inputs; };
+        patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit pins; };
       };
     };
 }

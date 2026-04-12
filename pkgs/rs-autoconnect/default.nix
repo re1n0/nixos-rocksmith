@@ -1,15 +1,18 @@
 {
-  inputs,
   lib,
   stdenv,
   cmake,
   libjack2,
+  pins,
 }:
+let
+  inherit (pins) rs-linux-autoconnect;
+in
 stdenv.mkDerivation {
   pname = "rs-autoconnect";
-  version = "1.1.1";
+  inherit (rs-linux-autoconnect) version;
 
-  src = inputs.rs-linux-autoconnect;
+  src = rs-linux-autoconnect;
 
   nativeBuildInputs = [
     cmake

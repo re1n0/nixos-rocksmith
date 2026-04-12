@@ -79,22 +79,6 @@
         "type": "github"
       }
     },
-    "linux-rocksmith": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773074512,
-        "narHash": "sha256-5tchphfL15fu/u0pIlQT9U9L8QPPBgZ+eEtGZRkSy6I=",
-        "ref": "refs/heads/main",
-        "rev": "b3ad5c031732a8bef7a53de6f560aac5779797f7",
-        "revCount": 231,
-        "type": "git",
-        "url": "https://codeberg.org/nizo/linux-rocksmith"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/nizo/linux-rocksmith"
-      }
-    },
     "nix-gaming": {
       "inputs": {
         "flake-parts": [
@@ -153,26 +137,8 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "linux-rocksmith": "linux-rocksmith",
         "nix-gaming": "nix-gaming",
-        "nixpkgs": "nixpkgs",
-        "rs-linux-autoconnect": "rs-linux-autoconnect"
-      }
-    },
-    "rs-linux-autoconnect": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753454170,
-        "narHash": "sha256-Uk4J2ZGHZFI6RX7pmGbdgxUWWdOegsNtJLc/aeBnj54=",
-        "owner": "KczBen",
-        "repo": "rs-linux-autoconnect",
-        "rev": "09a3f0fd0492573dd48468ab413626edd0cba757",
-        "type": "github"
-      },
-      "original": {
-        "owner": "KczBen",
-        "repo": "rs-linux-autoconnect",
-        "type": "github"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

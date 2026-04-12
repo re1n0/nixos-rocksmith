@@ -1,5 +1,4 @@
 {
-  inputs,
   lib,
   writeShellApplication,
   bash,
@@ -9,7 +8,11 @@
   gnutar,
   unzip,
   wget,
+  pins,
 }:
+let
+  inherit (pins) linux-rocksmith;
+in
 writeShellApplication {
   name = "patch-rocksmith";
 
@@ -23,13 +26,14 @@ writeShellApplication {
     wget
   ];
 
-  text = inputs.linux-rocksmith + "/scripts/patch-nixos.sh";
+  text = linux-rocksmith + "/scripts/patch-nixos.sh";
 
   meta = {
     description = "Script to patch Rocksmith 2014";
     homepage = "https://codeberg.org/nizo/linux-rocksmith";
     license = lib.licenses.gpl3Plus;
-    version = builtins.substring 0 10 inputs.linux-rocksmith.locked.time;
+    pname = "patch-rocksmith";
+    version = "0-git+${linux-rocksmith.revision}";
     maintainers = with lib.maintainers; [
       rein
     ];

@@ -2,7 +2,7 @@ name: update-dependencies
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * *' # at 3 am UTC
+    - cron: '0 0 * * *' # at 3 am UTC
 
 jobs:
   update-dependencies:
@@ -15,18 +15,24 @@ jobs:
             experimental-features = nix-command flakes
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Update flake.lock
-        id: update
-        uses: DeterminateSystems/update-flake-lock@v28
-        with:
-          pr-labels: |
-            dependencies
-            automated
-          pr-assignees: re1n0
+      - name: Install npins
+        run: nix profile install 'nixpkgs#npins'
 
-      - name: Print PR number
-        run: echo PR number is ${{ steps.update.outputs.pull-request-number }}
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Update npins
+        run: npins update
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "chore: bump lock"
+          branch: master
+          file_pattern: "flake.lock npins/sources.json"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"

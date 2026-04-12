@@ -11,16 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-
-    linux-rocksmith = {
-      url = "git+https://codeberg.org/nizo/linux-rocksmith";
-      flake = false;
-    };
-
-    rs-linux-autoconnect = {
-      url = "github:KczBen/rs-linux-autoconnect";
-      flake = false;
-    };
   };
 
   outputs =
