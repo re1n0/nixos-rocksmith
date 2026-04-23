@@ -1,9 +1,13 @@
-name: Deploy All
+name: build all
 
 on:
   push:
     branches: [master]
-  pull_request:
+  workflow_run:
+    workflows: ["update-dependencies"]
+    types:
+      - completed
+
 
 jobs:
   build:
