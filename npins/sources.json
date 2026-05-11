@@ -10,9 +10,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1595f8a093b27aa02ed4032809ad72fb1aae9dc3",
-      "url": "https://codeberg.org/nizo/linux-rocksmith/archive/1595f8a093b27aa02ed4032809ad72fb1aae9dc3.tar.gz",
-      "hash": "sha256-LBxzd91AvxEs3ARCSqI4Ir5floQiwhmoGp9neq4lqP8="
+      "revision": "36766f5ba7bb51969863a18afdbf3562df8e183f",
+      "url": "https://codeberg.org/nizo/linux-rocksmith/archive/36766f5ba7bb51969863a18afdbf3562df8e183f.tar.gz",
+      "hash": "sha256-azk/Yato3ZhpO/hxJEoKl9rQ4S0zRU/kX7CmHDUN3uU="
     },
     "rs-linux-autoconnect": {
       "type": "GitRelease",
