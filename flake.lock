@@ -36,7 +36,10 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "nix-gaming",
+          "flake-compat"
+        ],
         "gitignore": "gitignore",
         "nixpkgs": [
           "nix-gaming",
@@ -81,6 +84,7 @@
     },
     "nix-gaming": {
       "inputs": {
+        "flake-compat": "flake-compat",
         "flake-parts": [
           "flake-parts"
         ],
@@ -90,11 +94,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781844938,
-        "narHash": "sha256-3f7qkpu/AIdTrN+Iii0npmSRhqTrQi5WBBY+iZGzHg0=",
+        "lastModified": 1781943281,
+        "narHash": "sha256-Ga206P+IEguVLUoT87QvshjrLzzkoA3m6QMXySP+S1A=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "1d2fd7748850e437ec9831de7084ee5362ea0ff8",
+        "rev": "14e578b7b8d0696bbe582fa6fee79b8d1308efc8",
         "type": "github"
       },
       "original": {
