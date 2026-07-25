@@ -1,10 +1,8 @@
 {
+  lib,
   inputs,
   ...
 }:
-let
-  pins = import ../npins;
-in
 {
   systems = [ "x86_64-linux" ];
 
@@ -15,21 +13,32 @@ in
       config,
       system,
       pkgs,
+      final,
       ...
     }:
     {
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
+        config.allowUnfreePredicate =
+          pkg:
+          builtins.elem (lib.getName pkg) [
+            "steam"
+            "steam-unwrapped"
+          ];
       };
 
       overlayAttrs = config.packages;
 
       packages = {
-        rs-autoconnect = pkgs.pkgsi686Linux.callPackage ./rs-autoconnect { inherit pins; };
+        pipeasio = final.callPackage ./pipeasio { };
 
-        wineasio-32 = pkgs.pkgsi686Linux.callPackage ./wineasio-32 { };
+        rs-asio = final.callPackage ./rs_asio { };
 
-        patch-rocksmith = pkgs.callPackage ./patch-rocksmith { inherit pins; };
+        get-steam-app-path = final.callPackage ./get-steam-app-path { };
+
+        steam = final.callPackage ./steam { inherit (pkgs) steam; };
+
+        patch-rocksmith = final.callPackage ./patch-rocksmith { };
       };
     };
 }

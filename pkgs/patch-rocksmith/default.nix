@@ -1,47 +1,95 @@
 {
   lib,
+  pkgs,
   writeShellApplication,
-  bash,
   coreutils,
   findutils,
-  gawk,
-  gnutar,
-  unzip,
-  wget,
-  pins,
+  steam-run,
+  get-steam-app-path,
+  pipeasio,
+  rs-asio,
 }:
 let
-  inherit (pins) linux-rocksmith;
+  appId = "221680";
+
+  rsAsioIni = pkgs.writeText "RS_ASIO.ini" (
+    lib.generators.toINI { } {
+      Config = {
+        EnableWasapiOutputs = 0;
+        EnableWasapiInputs = 0;
+        EnableAsio = 1;
+      };
+
+      Asio.BufferSizeMode = "driver";
+
+      "Asio.Output" = {
+        Driver = "PipeASIO";
+        BaseChannel = 0;
+        EnableSoftwareEndpointVolumeControl = 1;
+        EnableSoftwareMasterVolumeControl = 1;
+        SoftwareMasterVolumePercent = 100;
+      };
+
+      "Asio.Input.0" = {
+        Driver = "PipeASIO";
+        Channel = 0;
+        EnableSoftwareEndpointVolumeControl = 1;
+        EnableSoftwareMasterVolumeControl = 1;
+        SoftwareMasterVolumePercent = 100;
+      };
+
+      "Asio.Input.1" = {
+        Driver = "PipeASIO";
+        Channel = 1;
+        EnableSoftwareEndpointVolumeControl = 1;
+        EnableSoftwareMasterVolumeControl = 1;
+        SoftwareMasterVolumePercent = 100;
+      };
+
+      "Asio.Input.Mic" = {
+        Driver = "PipeASIO";
+        Channel = 2;
+        EnableSoftwareEndpointVolumeControl = 1;
+        EnableSoftwareMasterVolumeControl = 1;
+        SoftwareMasterVolumePercent = 100;
+      };
+    }
+  );
 in
 writeShellApplication {
   name = "patch-rocksmith";
 
   runtimeInputs = [
-    bash
     coreutils
     findutils
-    gawk
-    gnutar
-    unzip
-    wget
+    steam-run
+    get-steam-app-path
+    pipeasio
   ];
 
-  text = linux-rocksmith + "/scripts/patch-nixos.sh";
+  text = ''
+    GAME_DIR=$(get-steam-app-path ${appId})
+    WINEPREFIX=$(get-steam-app-path ${appId} prefix)
+
+    if [ -d "$GAME_DIR" ]; then
+      cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
+      cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
+
+      cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
+
+      export WINEPREFIX
+      steam-run pipeasio-register
+    fi
+  '';
 
   meta = {
     description = "Script to patch Rocksmith 2014";
-    homepage = "https://codeberg.org/nizo/linux-rocksmith";
     license = lib.licenses.gpl3Plus;
     pname = "patch-rocksmith";
-    version = "0-git+${linux-rocksmith.revision}";
+    version = "0.1.0";
     maintainers = with lib.maintainers; [
       rein
     ];
-
-    postInstall = ''
-      mkdir -p $out/share/man/man1
-      install -m644 docs/patch-rocksmith.1 $out/share/man/patch-rocksmith.1
-    '';
 
     mainProgram = "patch-rocksmith";
   };

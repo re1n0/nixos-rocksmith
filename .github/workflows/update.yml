@@ -16,23 +16,20 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Install npins
-        run: nix profile install 'nixpkgs#npins'
+        uses: actions/checkout@v7
 
       - name: Update flake.lock
         run: nix flake update
 
-      - name: Update npins
-        run: npins update
+      - name: Update pipeasio
+        run: nix run 'nixpkgs#nix-update' -- --flake 'packages.x86_64-linux.pipeasio'
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: bump lock"
           branch: master
-          file_pattern: "flake.lock npins/sources.json"
+          file_pattern: "flake.lock pkgs/**/*.nix"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
