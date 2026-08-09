@@ -47,7 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = {
     homepage = "https://github.com/M0n7y5/pipeasio";
-    changelog = "https://github.com/M0n7y5/pipeasio/releases/tag/${finalAttrs.version}";
+    changelog = "https://github.com/M0n7y5/pipeasio/releases/tag/v${finalAttrs.version}";
     description = "ASIO to pipewire driver for wine";
     license = lib.licenses.gpl3Plus;
     maintainers = with lib.maintainers; [
