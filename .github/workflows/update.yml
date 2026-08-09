@@ -1,0 +1,79 @@
+name: update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Snapshot package versions before update
+        id: before
+        run: |
+          echo "pipeasio=$(nix eval --raw .#packages.x86_64-linux.pipeasio.version)" >> "$GITHUB_OUTPUT"
+          echo "rs_asio=$(nix eval --raw .#packages.x86_64-linux.rs-asio.version)" >> "$GITHUB_OUTPUT"
+          cp flake.lock flake.lock.before
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Update pipeasio
+        run: nix run 'nixpkgs#nix-update' -- --flake 'packages.x86_64-linux.pipeasio'
+
+      - name: Update rs-asio
+        run: nix run 'nixpkgs#nix-update' -- --flake 'packages.x86_64-linux.rs-asio'
+
+      - name: Build commit message
+        id: msg
+        run: |
+          set -eo pipefail
+          parts=()
+
+          for name in $(jq -r '.nodes | keys[]' flake.lock); do
+            [ "$name" = "root" ] && continue
+            old=$(jq -c --arg n "$name" '.nodes[$n].locked // "null"' flake.lock.before 2>/dev/null || echo null)
+            new=$(jq -c --arg n "$name" '.nodes[$n].locked // "null"' flake.lock)
+            if [ "$old" != "$new" ]; then
+              parts+=("bump $name")
+            fi
+          done
+
+          pipeasio_new="$(nix eval --raw .#packages.x86_64-linux.pipeasio.version)"
+          rs_asio_new="$(nix eval --raw .#packages.x86_64-linux.rs-asio.version)"
+
+          if [ "${{ steps.before.outputs.pipeasio }}" != "$pipeasio_new" ]; then
+            parts+=("pipeasio ${{ steps.before.outputs.pipeasio }} -> $pipeasio_new")
+          fi
+          if [ "${{ steps.before.outputs.rs_asio }}" != "$rs_asio_new" ]; then
+            parts+=("rs-asio ${{ steps.before.outputs.rs_asio }} -> $rs_asio_new")
+          fi
+
+          if [ "${#parts[@]}" -eq 0 ]; then
+            message="chore: bump dependencies"
+          else
+            joined=$(IFS=', '; echo "${parts[*]}")
+            message="chore: $joined"
+          fi
+
+          echo "message=$message" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: ${{ steps.msg.outputs.message }}
+          branch: master
+          file_pattern: "flake.lock pkgs/**/*.nix"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"

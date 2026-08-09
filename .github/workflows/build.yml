@@ -1,0 +1,55 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  workflow_run:
+    workflows: ["update-dependencies"]
+    types:
+      - completed
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: nixos-rocksmith
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipPush: true
+
+      - name: Build all packages
+        run: |
+          set -eo pipefail
+          for p in $(nix eval --json .#packages.x86_64-linux | jq -r 'keys[]'); do
+            out="$(nix build --no-link --print-out-paths ".#${p}")" || exit $?
+            cachix push nixos-rocksmith "$out"
+          done
+        env:
+          NIX_REMOTE: "daemon"
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Push master to release
+        run: |
+          git push origin HEAD:release
