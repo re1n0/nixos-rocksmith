@@ -22,10 +22,10 @@ jobs:
         run: nix flake update --commit-lock-file
 
       - name: Update pipeasio
-        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'packages.x86_64-linux.pipeasio'
+        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'pipeasio'
 
       - name: Update rs-asio
-        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'packages.x86_64-linux.rs-asio'
+        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'rs-asio'
 
       - name: Configure git
         run: |
