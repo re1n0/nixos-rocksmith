@@ -4,10 +4,9 @@ on:
   push:
     branches: [master]
   workflow_run:
-    workflows: ["update-dependencies"]
+    workflows: ["update"]
     types:
       - completed
-
 
 jobs:
   build:
@@ -34,7 +33,7 @@ jobs:
         run: |
           set -eo pipefail
           for p in $(nix eval --json .#packages.x86_64-linux | jq -r 'keys[]'); do
-            out="$(nix build --no-link --print-out-paths ".#${p}")" || exit $?
+            out="$(nix build --no-link --print-out-paths ".#${p}")"
             cachix push nixos-rocksmith "$out"
           done
         env:
