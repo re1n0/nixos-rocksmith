@@ -18,6 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Update flake.lock
         run: nix flake update --commit-lock-file
 
@@ -25,12 +30,7 @@ jobs:
         run: nix run 'nixpkgs#nix-update' -- --flake --commit 'pipeasio'
 
       - name: Update rs-asio
-        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'rs-asio'
-
-      - name: Configure git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        run: nix run 'nixpkgs#nix-update' -- --flake --commit 'rs-asio'      
 
       - name: Push changes
         run: git push origin master
