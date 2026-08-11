@@ -9,6 +9,7 @@ in
 lib.mkIf cfg.enable {
   xdg.configFile."pipeasio/config.ini".text = lib.generators.toINI { } {
     pipeasio = {
+      inputs = 1;
       buffer_size = cfg.pipeasio.buffer;
       sample_rate = cfg.pipeasio.rate;
       input_device = cfg.pipeasio.inputDevice;
