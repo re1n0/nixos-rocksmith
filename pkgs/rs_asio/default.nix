@@ -4,10 +4,16 @@
   fetchFromGitHub,
   llvmPackages,
   pkgsi686Linux,
+  cacert,
 }:
 let
   target = "i686-pc-windows-msvc";
-  sdk = pkgsi686Linux.windows.sdk;
+  sdk = pkgsi686Linux.windows.sdk.overrideAttrs (oldAttrs: {
+    src = oldAttrs.src.overrideAttrs (_: {
+      SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
+      NIX_SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
+    });
+  });
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rs-asio";
