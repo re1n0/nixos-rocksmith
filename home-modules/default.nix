@@ -1,11 +1,10 @@
 {
   self,
   lib,
-  osConfig,
   ...
 }:
 {
-  flake.homeManagerModules.default = {
+  flake.homeManagerModules.default = { osConfig, ... }: {
     imports = [
       ./activation.nix
       ./pipeasio.nix
