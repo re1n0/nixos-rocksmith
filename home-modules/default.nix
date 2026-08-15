@@ -1,10 +1,12 @@
-_: {
+{ self, ... }: {
   flake.homeManagerModules.default = {
     imports = [
       ./activation.nix
       ./pipeasio.nix
     ];
 
-    home-manager.useGlobalPkgs = true;
+    nixpkgs.overlays = [
+      self.overlays.default
+    ];
   };
 }
