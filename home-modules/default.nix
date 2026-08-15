@@ -4,5 +4,7 @@ _: {
       ./activation.nix
       ./pipeasio.nix
     ];
+
+    home-manager.useGlobalPkgs = true;
   };
 }
