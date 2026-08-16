@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = osConfig.programs.steam.rocksmithPatch;
 
   launchScript = pkgs.writeShellApplication {
@@ -18,10 +17,10 @@ let
     '';
   };
 in
-lib.mkIf cfg.enable {
-  home.activation.patchRocksmith = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${lib.getExe pkgs.patch-rocksmith}
-  '';
+  lib.mkIf cfg.enable {
+    home.activation.patchRocksmith = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      ${lib.getExe pkgs.patch-rocksmith}
+    '';
 
-  home.packages = [ launchScript ];
-}
+    home.packages = [launchScript];
+  }

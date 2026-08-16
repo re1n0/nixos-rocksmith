@@ -4,11 +4,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.programs.steam.rocksmithPatch;
-in
-{
+in {
   options = {
     programs.steam.rocksmithPatch = {
       enable = lib.mkEnableOption "A set of patches and options to make Rocksmith 2014 compatible with NixOS";

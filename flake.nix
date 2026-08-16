@@ -7,22 +7,25 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./home-modules
         ./modules
         ./pkgs
       ];
 
-      perSystem =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          formatter = pkgs.nixfmt-tree;
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.treefmt.withConfig {
+          runtimeInputs = [pkgs.alejandra];
+          settings = {
+            on-unmatched = "info";
+            formatter.alejandra = {
+              command = "alejandra";
+              includes = ["*.nix"];
+            };
+          };
         };
+      };
     };
 }

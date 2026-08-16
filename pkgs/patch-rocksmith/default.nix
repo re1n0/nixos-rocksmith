@@ -8,12 +8,11 @@
   get-steam-app-path,
   pipeasio,
   rs-asio,
-}:
-let
+}: let
   appId = "221680";
 
   rsAsioIni = pkgs.writeText "RS_ASIO.ini" (
-    lib.generators.toINI { } {
+    lib.generators.toINI {} {
       Config = {
         EnableWasapiOutputs = 0;
         EnableWasapiInputs = 0;
@@ -56,42 +55,42 @@ let
     }
   );
 in
-writeShellApplication {
-  name = "patch-rocksmith";
+  writeShellApplication {
+    name = "patch-rocksmith";
 
-  runtimeInputs = [
-    coreutils
-    findutils
-    steam-run
-    get-steam-app-path
-    pipeasio
-  ];
-
-  text = ''
-    GAME_DIR=$(get-steam-app-path ${appId})
-    WINEPREFIX=$(get-steam-app-path ${appId} prefix)
-
-    if [ -d "$GAME_DIR" ]; then
-      cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
-      cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
-
-      cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
-
-      export WINEPREFIX
-      export PIPEASIO_REGISTER_WITHOUT_LOADING=1
-      steam-run pipeasio-register
-    fi
-  '';
-
-  meta = {
-    description = "Script to patch Rocksmith 2014";
-    license = lib.licenses.gpl3Plus;
-    pname = "patch-rocksmith";
-    version = "0.1.0";
-    maintainers = with lib.maintainers; [
-      rein
+    runtimeInputs = [
+      coreutils
+      findutils
+      steam-run
+      get-steam-app-path
+      pipeasio
     ];
 
-    mainProgram = "patch-rocksmith";
-  };
-}
+    text = ''
+      GAME_DIR=$(get-steam-app-path ${appId})
+      WINEPREFIX=$(get-steam-app-path ${appId} prefix)
+
+      if [ -d "$GAME_DIR" ]; then
+        cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
+        cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
+
+        cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
+
+        export WINEPREFIX
+        export PIPEASIO_REGISTER_WITHOUT_LOADING=1
+        steam-run pipeasio-register
+      fi
+    '';
+
+    meta = {
+      description = "Script to patch Rocksmith 2014";
+      license = lib.licenses.gpl3Plus;
+      pname = "patch-rocksmith";
+      version = "0.1.0";
+      maintainers = with lib.maintainers; [
+        rein
+      ];
+
+      mainProgram = "patch-rocksmith";
+    };
+  }
