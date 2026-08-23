@@ -81,8 +81,8 @@ in {
           enable = true;
           onSteamRunning = "close";
 
-          apps."Rocksmith 2014" = {
-            id = 221680;
+          apps."221680" = {
+            name = "Rocksmith 2014";
             env.PROTON_USE_WOW64 = 1;
             env.WINEDLLPATH = "/run/host/usr/lib64/wine";
           };
