@@ -5,6 +5,7 @@
   llvmPackages,
   pkgsi686Linux,
   cacert,
+  removeReferencesTo,
 }: let
   target = "i686-pc-windows-msvc";
   sdk = pkgsi686Linux.windows.sdk.overrideAttrs (oldAttrs: {
@@ -30,13 +31,15 @@ in
       llvmPackages.clang-unwrapped
       llvmPackages.lld
       llvmPackages.llvm
+      removeReferencesTo
     ];
 
     hardeningDisable = ["all"];
 
     dontConfigure = true;
-    dontFixup = true;
-    dontStrip = true;
+
+    removeReferencesTo = [sdk];
+    disallowedReferences = [sdk];
 
     postPatch = ''
       substituteInPlace avrt/dllmain.cpp \
