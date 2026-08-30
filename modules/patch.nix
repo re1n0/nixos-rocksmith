@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -43,51 +42,34 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
+  config = lib.mkIf cfg.enable {
+    services.pulseaudio.enable = lib.mkForce false;
+
+    services.pipewire = {
+      enable = true;
+      wireplumber.enable = true;
+    };
+
+    security.rtkit.enable = true;
+
+    security.pam.loginLimits = [
       {
-        services.pulseaudio.enable = lib.mkForce false;
-
-        services.pipewire = {
-          enable = true;
-          wireplumber.enable = true;
-        };
-
-        security.rtkit.enable = true;
-
-        security.pam.loginLimits = [
-          {
-            domain = "@audio";
-            item = "memlock";
-            type = "-";
-            value = "unlimited";
-          }
-          {
-            domain = "@audio";
-            item = "rtprio";
-            type = "-";
-            value = "99";
-          }
-        ];
-
-        environment.systemPackages = with pkgs; [
-          rtaudio
-          patch-rocksmith
-        ];
+        domain = "@audio";
+        item = "memlock";
+        type = "-";
+        value = "unlimited";
       }
+      {
+        domain = "@audio";
+        item = "rtprio";
+        type = "-";
+        value = "99";
+      }
+    ];
 
-      (lib.optionalAttrs (options ? programs.steam.config) {
-        programs.steam.config = {
-          enable = true;
-          onSteamRunning = "close";
-
-          apps."221680" = {
-            name = "Rocksmith 2014";
-            env.PROTON_USE_WOW64 = 1;
-            env.WINEDLLPATH = "/run/host/usr/lib64/wine";
-          };
-        };
-      })
-    ]
-  );
+    environment.systemPackages = with pkgs; [
+      rtaudio
+      patch-rocksmith
+    ];
+  };
 }

@@ -29,7 +29,6 @@ In order to use this, you need to include it in your flake's inputs like this:
       specialArgs = {inherit inputs;};
       modules = [
         inputs.home-manager.nixosModules.home-manager
-        inputs.steam-config-nix.nixosModules.default
         inputs.nixos-rocksmith.nixosModules.default
         ./configuration.nix
       ];
@@ -47,6 +46,12 @@ In order to use this, you need to include it in your flake's inputs like this:
 
   # Add user to `audio` and `rtkit` groups.
   users.users.<username>.extraGroups = [ "audio" "rtkit" ];
+
+
+  # Optional for automatic launch options
+  home-manager.sharedModules = [
+    inputs.steam-config-nix.homeModules.default
+  ];
 
   programs.steam = {
     enable = true;

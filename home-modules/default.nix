@@ -7,6 +7,7 @@
     imports = [
       ./activation.nix
       ./pipeasio.nix
+      ./steam.nix
     ];
 
     nixpkgs.overlays = lib.mkIf (!(osConfig.home-manager.useGlobalPkgs or false)) [
