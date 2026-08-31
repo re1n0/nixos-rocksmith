@@ -6,7 +6,8 @@
 }: let
   cfg = osConfig.programs.steam.rocksmithPatch;
 in
-  lib.mkIf ((options ? programs.steam.config)
+{
+  config = lib.optionalAttrs (options ? programs.steam.config
     && cfg.enable) {
     programs.steam.config = {
       enable = lib.mkDefault true;
@@ -18,4 +19,5 @@ in
         env.WINEDLLPATH = "/run/host/usr/lib64/wine";
       };
     };
-  }
+  };
+}
