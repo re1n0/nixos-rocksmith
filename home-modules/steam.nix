@@ -6,8 +6,8 @@
 }: let
   cfg = osConfig.programs.steam.rocksmithPatch;
 in
-  lib.mkIf (options ? programs.steam.config)
-  && cfg.enable {
+  lib.mkIf ((options ? programs.steam.config)
+    && cfg.enable) {
     programs.steam.config = {
       enable = lib.mkDefault true;
       onSteamRunning = lib.mkDefault "close";
