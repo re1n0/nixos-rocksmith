@@ -4,7 +4,6 @@
   writeShellApplication,
   coreutils,
   findutils,
-  steam-run,
   get-steam-app-path,
   pipeasio,
   rs-asio,
