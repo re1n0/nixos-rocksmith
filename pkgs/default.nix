@@ -33,8 +33,6 @@
 
       get-steam-app-path = final.callPackage ./get-steam-app-path {};
 
-      steam = final.callPackage ./steam {inherit (pkgs) steam;};
-
       patch-rocksmith = final.callPackage ./patch-rocksmith {};
     };
   };

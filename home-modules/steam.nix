@@ -5,8 +5,7 @@
   ...
 }: let
   cfg = osConfig.programs.steam.rocksmithPatch;
-in
-{
+in {
   config = lib.optionalAttrs (options ? programs.steam.config
     && cfg.enable) {
     programs.steam.config = {
