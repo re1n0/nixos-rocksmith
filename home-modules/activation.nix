@@ -19,7 +19,7 @@
 in
   lib.mkIf cfg.enable {
     home.activation.patchRocksmith = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${lib.getExe pkgs.patch-rocksmith}
+      steam-run ${lib.getExe pkgs.patch-rocksmith}
     '';
 
     home.packages = [launchScript];

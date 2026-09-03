@@ -61,7 +61,6 @@ in
     runtimeInputs = [
       coreutils
       findutils
-      steam-run
       get-steam-app-path
       pipeasio
     ];
@@ -77,7 +76,7 @@ in
 
         export WINEPREFIX
         export PIPEASIO_REGISTER_WITHOUT_LOADING=1
-        ''${DRY_RUN_CMD:-} steam-run pipeasio-register
+        ''${DRY_RUN_CMD:-} pipeasio-register
       fi
     '';
 
