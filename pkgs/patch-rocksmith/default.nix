@@ -68,7 +68,7 @@ in
       GAME_DIR=$(get-steam-app-path ${appId})
       WINEPREFIX=$(get-steam-app-path ${appId} prefix)
 
-      if [ -d "$GAME_DIR" ]; then
+      if [ -d "$GAME_DIR" ] && [ -d "$WINEPREFIX" ]; then
         ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
         ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
         ''${DRY_RUN_CMD:-} cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
