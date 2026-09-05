@@ -14,13 +14,13 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "pipeasio";
-    version = "1.5.0";
+    version = "1.6.0";
 
     src = fetchFromGitHub {
       owner = "M0n7y5";
       repo = "pipeasio";
-      rev = "v1.5.0";
-      hash = "sha256-5CrcE27vMlRhc+Xu8TSfn1lnF4odAwaZoeh5OvcGi44=";
+      rev = "v1.6.0";
+      hash = "sha256-6HyerHcgXHixHAa1h4bDEugKEX5wx2Z31kN29GpvaWs=";
     };
 
     nativeBuildInputs = [
