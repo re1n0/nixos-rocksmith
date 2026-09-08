@@ -59,11 +59,12 @@ in
     '';
 
     cmakeFlags = [
-      "-DCMAKE_BUILD_TYPE=Release"
       "-DBUILD_WOW64_32=ON"
       "-DWINE_INCLUDE_DIRS=${wine}/include;${wine}/include/wine;${wine}/include/wine/windows"
     ];
 
+    cmakeBuildType = "Release";
+    
     meta = {
       homepage = "https://github.com/M0n7y5/pipeasio";
       changelog = "https://github.com/M0n7y5/pipeasio/releases/tag/v${finalAttrs.version}";
