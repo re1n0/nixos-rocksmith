@@ -45,6 +45,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.steam.extraPackages = with pkgs; [
       pipeasio
+      patch-rocksmith
     ];
 
     services.pulseaudio.enable = lib.mkForce false;
@@ -73,7 +74,6 @@ in {
 
     environment.systemPackages = with pkgs; [
       rtaudio
-      patch-rocksmith
     ];
   };
 }
