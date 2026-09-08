@@ -45,6 +45,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.steam.extraPackages = with pkgs; [
       pipeasio
+      wineWow64Packages.stable
       patch-rocksmith
     ];
 
