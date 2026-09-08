@@ -7,6 +7,7 @@
   get-steam-app-path,
   pipeasio,
   rs-asio,
+  umu-launcher,
 }: let
   appId = "221680";
 
@@ -62,18 +63,23 @@ in
       findutils
       get-steam-app-path
       pipeasio
+      umu-launcher
     ];
 
     text = ''
       GAME_DIR=$(get-steam-app-path ${appId})
       WINEPREFIX=$(get-steam-app-path ${appId} prefix)
+      PROTONPATH=$(get-steam-app-path ${appId} proton)
 
-      if [ -d "$GAME_DIR" ] && [ -d "$WINEPREFIX" ]; then
+      if [ -d "$GAME_DIR" ] && [ -d "$WINEPREFIX" ] && [ -d "$PROTONPATH" ]; then
         ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
         ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
         ''${DRY_RUN_CMD:-} cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
 
         export WINEPREFIX
+        export PROTONPATH
+        export WINE=umu-run
+        export GAMEID=${appId}
         export PIPEASIO_REGISTER_WITHOUT_LOADING=1
         ''${DRY_RUN_CMD:-} pipeasio-register
       fi

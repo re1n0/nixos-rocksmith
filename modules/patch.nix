@@ -45,7 +45,6 @@ in {
   config = lib.mkIf cfg.enable {
     programs.steam.extraPackages = with pkgs; [
       pipeasio
-      wineWow64Packages.stable
     ];
 
     services.pulseaudio.enable = lib.mkForce false;
