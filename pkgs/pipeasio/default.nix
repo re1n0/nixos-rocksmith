@@ -64,7 +64,7 @@ in
     ];
 
     cmakeBuildType = "Release";
-    
+
     meta = {
       homepage = "https://github.com/M0n7y5/pipeasio";
       changelog = "https://github.com/M0n7y5/pipeasio/releases/tag/v${finalAttrs.version}";

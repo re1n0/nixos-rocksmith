@@ -19,7 +19,9 @@
 in
   lib.mkIf cfg.enable {
     home.activation.patchRocksmith = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      PATH="/run/current-system/sw/bin:$PATH" steam-run ${lib.getExe pkgs.patch-rocksmith}
+      if [[ "''${oldGenPath:-}" != "''${newGenPath:-}" ]]; then
+        PATH="/run/current-system/sw/bin:$PATH" steam-run ${lib.getExe pkgs.patch-rocksmith}
+      fi
     '';
 
     home.packages = [launchScript];
