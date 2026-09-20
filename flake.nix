@@ -19,14 +19,25 @@
         ./pkgs
       ];
 
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        pkgs,
+        lib,
+        ...
+      }: {
         formatter = pkgs.treefmt.withConfig {
-          runtimeInputs = [pkgs.alejandra];
+          runtimeInputs = [pkgs.alejandra pkgs.ruff];
           settings = {
             on-unmatched = "info";
             formatter.alejandra = {
               command = "alejandra";
               includes = ["*.nix"];
+            };
+            formatter.ruff = {
+              command = pkgs.writeShellScript "ruff-format" ''
+                ${lib.getExe pkgs.ruff} check "$@"
+                ${lib.getExe pkgs.ruff} format "$@"
+              '';
+              includes = ["*.py"];
             };
           };
         };

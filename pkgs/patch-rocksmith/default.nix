@@ -1,17 +1,15 @@
 {
   lib,
-  pkgs,
-  writeShellApplication,
-  coreutils,
-  findutils,
-  get-steam-app-path,
+  writeText,
+  python3Packages,
+  protontricks,
   pipeasio,
-  rs-asio,
   umu-launcher,
+  rs-asio,
 }: let
   appId = "221680";
 
-  rsAsioIni = pkgs.writeText "RS_ASIO.ini" (
+  rsAsioIni = writeText "RS_ASIO.ini" (
     lib.generators.toINI {} {
       Config = {
         EnableWasapiOutputs = 0;
@@ -54,46 +52,55 @@
       };
     }
   );
+
+  protontricksModule = python3Packages.toPythonModule protontricks;
 in
-  writeShellApplication {
-    name = "patch-rocksmith";
+  python3Packages.buildPythonApplication {
+    pname = "patch-rocksmith";
+    version = "1.0.0";
+    pyproject = true;
 
-    runtimeInputs = [
-      coreutils
-      findutils
-      get-steam-app-path
-      pipeasio
-      umu-launcher
+    src = ./patcher;
+
+    build-system = [python3Packages.setuptools];
+
+    propagatedBuildInputs = [protontricksModule];
+
+    makeWrapperArgs = [
+      "--prefix"
+      "PATH"
+      ":"
+      "${lib.makeBinPath [pipeasio umu-launcher]}"
+
+      "--add-flags"
+      "--appid"
+      "--add-flags"
+      "${appId}"
+
+      "--add-flags"
+      "--rs-asio-dll"
+      "--add-flags"
+      "${rs-asio}/lib/RS_ASIO.dll"
+
+      "--add-flags"
+      "--avrt-dll"
+      "--add-flags"
+      "${rs-asio}/lib/avrt.dll"
+
+      "--add-flags"
+      "--rs-asio-ini"
+      "--add-flags"
+      "${rsAsioIni}"
     ];
-
-    text = ''
-      GAME_DIR=$(get-steam-app-path ${appId})
-      WINEPREFIX=$(get-steam-app-path ${appId} prefix)
-      PROTONPATH=$(get-steam-app-path ${appId} proton)
-
-      if [ -d "$GAME_DIR" ] && [ -d "$WINEPREFIX" ] && [ -d "$PROTONPATH" ]; then
-        ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/RS_ASIO.dll "$GAME_DIR/RS_ASIO.dll"
-        ''${DRY_RUN_CMD:-} cp -f ${rs-asio}/lib/avrt.dll "$GAME_DIR/avrt.dll"
-        ''${DRY_RUN_CMD:-} cp -f ${rsAsioIni} "$GAME_DIR/RS_ASIO.ini"
-
-        export WINEPREFIX
-        export PROTONPATH
-        export WINE=umu-run
-        export GAMEID=${appId}
-        export PIPEASIO_REGISTER_WITHOUT_LOADING=1
-        ''${DRY_RUN_CMD:-} pipeasio-register
-      fi
-    '';
 
     meta = {
       description = "Script to patch Rocksmith 2014";
       license = lib.licenses.gpl3Plus;
       pname = "patch-rocksmith";
-      version = "0.1.0";
+      version = "1.0.0";
       maintainers = with lib.maintainers; [
         rein
       ];
-
       mainProgram = "patch-rocksmith";
     };
   }

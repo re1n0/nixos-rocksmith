@@ -8,7 +8,6 @@
   perSystem = {
     config,
     system,
-    pkgs,
     final,
     ...
   }: {
@@ -30,8 +29,6 @@
       pipeasio = final.callPackage ./pipeasio {};
 
       rs-asio = final.callPackage ./rs_asio {};
-
-      get-steam-app-path = final.callPackage ./get-steam-app-path {};
 
       patch-rocksmith = final.callPackage ./patch-rocksmith {};
     };
