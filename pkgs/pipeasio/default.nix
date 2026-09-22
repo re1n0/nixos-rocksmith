@@ -7,7 +7,9 @@
   pipewire,
   wineWow64Packages,
   pkgsCross,
+  libarchive,
   qt6,
+  yaml-cpp,
 }: let
   mingw64 = pkgsCross.mingwW64;
   mingw32 = pkgsCross.mingw32;
@@ -15,13 +17,13 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "pipeasio";
-    version = "1.7.0";
+    version = "1.8.0";
 
     src = fetchFromGitHub {
       owner = "M0n7y5";
       repo = "pipeasio";
-      rev = "v1.7.0";
-      hash = "sha256-L7EkqebKAgVtTWFDOH3b0emFE/3Esex8T0xtbOXjNgE=";
+      rev = "v1.8.0";
+      hash = "sha256-mB4vmrX9bWHzxqH37IXW6FnPtHZyGWRLzpnTAOGDF+k=";
     };
 
     strictDeps = true;
@@ -38,7 +40,9 @@ in
 
     buildInputs = [
       pipewire
+      libarchive
       qt6.qtbase
+      yaml-cpp
     ];
 
     preConfigure = ''
