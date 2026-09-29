@@ -17,13 +17,13 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "pipeasio";
-    version = "1.8.1";
+    version = "1.9.0";
 
     src = fetchFromGitHub {
       owner = "M0n7y5";
       repo = "pipeasio";
-      rev = "v1.8.1";
-      hash = "sha256-7IhTBE8tqVQ9mNAdf8Oqw5xUwhVAdTbqcJmnu+eA/j0=";
+      rev = "v1.9.0";
+      hash = "sha256-Yh/aT5Z/WbMkMcZlA7B6nQjNDUwuDkCna659O1WL+AI=";
     };
 
     strictDeps = true;
