@@ -1,10 +1,10 @@
 {
   lib,
+  fetchFromCodeberg,
   writeText,
   python3Packages,
   protontricks,
   pipeasio,
-  umu-launcher,
   rs-asio,
 }: let
   appId = "221680";
@@ -55,12 +55,17 @@
 
   protontricksModule = python3Packages.toPythonModule protontricks;
 in
-  python3Packages.buildPythonApplication {
+  python3Packages.buildPythonApplication (finalAttrs: {
     pname = "patch-rocksmith";
-    version = "1.0.0";
+    version = "1.1.0";
     pyproject = true;
 
-    src = ./patcher;
+    src = fetchFromCodeberg {
+      owner = "rein";
+      repo = "linux-rocksmith-patch";
+      tag = finalAttrs.version;
+      hash = "sha256-QgmMAF6aewcEOU3gaAGxfkoybPsyZoUc2yS6K0Eoytk=";
+    };
 
     build-system = [python3Packages.setuptools];
 
@@ -70,7 +75,7 @@ in
       "--prefix"
       "PATH"
       ":"
-      "${lib.makeBinPath [pipeasio umu-launcher]}"
+      "${lib.makeBinPath [pipeasio]}"
 
       "--add-flags"
       "--appid"
@@ -94,13 +99,12 @@ in
     ];
 
     meta = {
-      description = "Script to patch Rocksmith 2014";
+      description = "Automatic patcher for Rocksmith 2014 using RS_ASIO/PipeASIO";
+      homepage = "https://codeberg.org/rein/linux-rocksmith-patch";
       license = lib.licenses.gpl3Plus;
-      pname = "patch-rocksmith";
-      version = "1.0.0";
       maintainers = with lib.maintainers; [
         rein
       ];
       mainProgram = "patch-rocksmith";
     };
-  }
+  })
